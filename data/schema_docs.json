@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Esquema de Documento para el Sistema RAG",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Identificador único del documento."},
+    "texto": {"type": "string", "minLength": 1, "description": "Contenido principal del documento."},
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "origen": {"type": "string", "description": "Fuente del documento."},
+        "fecha": {"type": "string", "format": "date", "description": "Fecha de creación o modificación."},
+        "categoría": {"type": "string", "description": "Categoría o etiquetas del documento."}
+      },
+      "required": ["origen", "fecha"]
+    }
+  },
+  "required": ["id", "texto", "metadata"]
+}

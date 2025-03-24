@@ -1,0 +1,99 @@
+version: "3.8"
+
+services:
+  ######################################################################
+  # Servicio API principal
+  ######################################################################
+  api:
+    container_name: rag_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Mapea el puerto local 8000 al puerto 8000 interno del contenedor,
+    # donde uvicorn sirve la app FastAPI.
+    ports:
+      - "8000:8000"
+
+    # Variables de entorno que se inyectan dentro del contenedor.
+    # Pueden ser leídas desde el .env o directamente definidas en tu entorno.
+    environment:
+      OPENAI_API_KEY: "${OPENAI_API_KEY}"
+      DB_CONNECTION: "${DB_CONNECTION}"
+
+    # Indica que este servicio depende del contenedor 'db'; no se levantará
+    # hasta que 'db' esté saludable según su healthcheck.
+    depends_on:
+      db:
+        condition: service_healthy
+
+    # Realiza un healthcheck contra la API para asegurarse de que
+    # esté arriba. Ajusta la ruta '/health' si deseas un endpoint distinto.
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+  ######################################################################
+  # Servicio de Base de Datos (PostgreSQL)
+  ######################################################################
+  db:
+    container_name: rag_db
+    image: postgres:14
+
+    # Variables de entorno que usa el contenedor oficial de Postgres
+    environment:
+      POSTGRES_USER: "usuario"
+      POSTGRES_PASSWORD: "contraseña"
+      POSTGRES_DB: "rag_db"
+
+    # Montamos un volumen para persistir datos entre reinicios.
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+    # Healthcheck para que Docker Compose sepa si la DB está lista.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usuario"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  ######################################################################
+  # Servicio Dashboard (Monitor)
+  ######################################################################
+  dashboard:
+    container_name: rag_dashboard
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Se asume que el mismo Dockerfile contiene el código de "dashboard".
+    # Se corre el monitor con el comando principal:
+    command: python dashboard/monitor.py
+
+    # Espera que la API esté saludable para arrancar
+    depends_on:
+      api:
+        condition: service_healthy
+
+    # Si tu dashboard expone un puerto, podrías mapearlo aquí.
+    # Si es solo interno o WebSocket, ajusta según corresponda.
+    # ports:
+    #   - "8500:8500"
+
+    # También podrías añadir un healthcheck si tu dashboard expone una ruta
+    # para verificar su estado (opcional).
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8500/dashboard/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+
+######################################################################
+# Definición de Volúmenes
+######################################################################
+volumes:
+  db_data:

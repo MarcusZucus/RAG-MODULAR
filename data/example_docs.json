@@ -1,0 +1,12 @@
+[
+  {
+    "id": "doc1",
+    "texto": "Ejemplo de documento para pruebas y demostraciones del sistema RAG.",
+    "metadata": {"origen": "ejemplo", "fecha": "2025-03-22", "categoría": "demo"}
+  },
+  {
+    "id": "doc2",
+    "texto": "Otro ejemplo de documento con contenido diverso para validar la estructura.",
+    "metadata": {"origen": "ejemplo", "fecha": "2025-03-22", "categoría": "prueba"}
+  }
+]

@@ -1,0 +1,29 @@
+# requirements.txt – Dependencias completas para el proyecto RAG
+
+# Dependencias principales mencionadas en tu repositorio
+fastapi==0.95.1
+uvicorn==0.22.0
+faiss-cpu==1.7.3
+chromadb==0.3.21
+openai==0.27.8
+transformers==4.30.0
+torch==2.0.1
+requests==2.31.0
+pydantic==1.10.7
+
+# --- Dependencias adicionales detectadas en el código ---
+# Para autenticación y creación/verificación de tokens JWT
+pyjwt==2.7.0
+
+# Para conexión con bases de datos PostgreSQL (sql_loader)
+psycopg2-binary==2.9.6
+
+# Para validaciones avanzadas de esquemas JSON (validation.py)
+jsonschema==4.17.3
+
+# Para embeddings locales con sentence_transformer_embedder.py
+sentence-transformers==2.2.2
+
+# --- Librerías para testing e integración ---
+pytest==7.4.0
+pytest-asyncio==0.21.0

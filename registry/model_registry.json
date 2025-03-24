@@ -1,0 +1,16 @@
+{
+  "models": [
+    {
+      "name": "openai_generator",
+      "version": "1.0.0",
+      "dependencies": ["openai_embedder", "faiss_store"],
+      "compatibility": ">=1.0.0"
+    },
+    {
+      "name": "local_llm_generator",
+      "version": "1.0.0",
+      "dependencies": ["sentence_transformer_embedder", "chroma_store"],
+      "compatibility": ">=1.0.0"
+    }
+  ]
+}
