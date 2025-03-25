@@ -8,7 +8,7 @@ transformers==4.30.0
 torch==2.0.1
 requests==2.31.0
 pydantic==1.10.9
-pydantic-settings==1.0.0           
+pydantic-settings==1.2.0          
 
 # === Autenticación y seguridad ===
 pyjwt==2.7.0
