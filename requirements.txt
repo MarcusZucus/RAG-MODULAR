@@ -1,8 +1,6 @@
-# requirements.txt – Dependencias completas para el proyecto RAG
-
-# Dependencias principales mencionadas en tu repositorio
+# === Dependencias principales ===
 fastapi==0.95.1
-uvicorn==0.22.0
+uvicorn[standard]==0.22.0           # 'standard' incluye extras como 'watchgod' y 'httptools'
 faiss-cpu==1.7.3
 chromadb==0.3.21
 openai==0.27.8
@@ -11,19 +9,23 @@ torch==2.0.1
 requests==2.31.0
 pydantic==1.10.7
 
-# --- Dependencias adicionales detectadas en el código ---
-# Para autenticación y creación/verificación de tokens JWT
+# === Autenticación y seguridad ===
 pyjwt==2.7.0
 
-# Para conexión con bases de datos PostgreSQL (sql_loader)
+# === Base de datos ===
 psycopg2-binary==2.9.6
 
-# Para validaciones avanzadas de esquemas JSON (validation.py)
+# === Validaciones ===
 jsonschema==4.17.3
 
-# Para embeddings locales con sentence_transformer_embedder.py
+# === Embeddings locales ===
 sentence-transformers==2.2.2
 
-# --- Librerías para testing e integración ---
+# === Testing ===
 pytest==7.4.0
 pytest-asyncio==0.21.0
+
+# === Utilidades opcionales y mejoras de rendimiento ===
+python-dotenv==1.0.1       # Cargar variables desde archivos .env
+httpx==0.27.0              # Alternativa a requests, soporta async
+aiofiles==23.2.1           # Para manejo de archivos async en FastAPI

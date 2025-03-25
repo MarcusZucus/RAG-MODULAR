@@ -42,6 +42,9 @@ WORKDIR /app
 # Copiamos los paquetes ya instalados desde la etapa builder
 COPY --from=builder /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
 
+# Copiamos el ejecutable uvicorn desde la etapa builder
+COPY --from=builder /usr/local/bin/uvicorn /usr/local/bin/uvicorn
+
 # Copiamos el resto del código del proyecto
 COPY . .
 
