@@ -8,6 +8,8 @@ transformers==4.30.0
 torch==2.0.1
 requests==2.31.0
 pydantic==1.10.9
+pydantic-settings==2.8.1
+
 
 
 
